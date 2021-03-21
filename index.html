@@ -152,6 +152,100 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/20/%E9%9B%B6%E7%A2%8E%E7%9A%84%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="long">
+      <meta itemprop="description" content="小龙仔">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="long">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/20/%E9%9B%B6%E7%A2%8E%E7%9A%84%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">零碎的小程序笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-20 13:34:00" itemprop="dateCreated datePublished" datetime="2020-03-20T13:34:00+08:00">2020-03-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>template的简单使用<br>WXS的简单使用<br>npm的简单使用<br>倒计时js的实现<br><code>wx:for</code>的使用<br>一些js方法记录<br>wxss记录</p>
+<h3 id="template的简单使用"><a href="#template的简单使用" class="headerlink" title="template的简单使用"></a>template的简单使用</h3><p>创建一个page，在<code>.wxml</code>、<code>.wxss</code>中正常编写页面和样式代码，其中在<code>.wxml</code>中加入<code>&lt;template&gt;</code>标签如下：<code>my_template.wxml</code>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;template name&#x3D;&quot;my-first-template&quot;&gt;</span><br><span class="line">  &lt;view&gt;&#123;&#123;myData&#125;&#125;&lt;&#x2F;view&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
+<p>在需要用到该模板的<code>wxml</code>页面，引入模板并使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 引用模板文件</span><br><span class="line">&lt;import src&#x3D;&quot;..&#x2F;my_template&#x2F;my_template.wxml&quot; &#x2F;&gt;</span><br><span class="line">&#x2F;&#x2F; 使用模板</span><br><span class="line">&lt;template is&#x3D;&quot;my-first-template&quot; data&#x3D;&quot;&#123;&#123;myData&#125;&#125;&quot;&gt;&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
+<p>在对应的<code>.wxss</code>文件也要引入对应的模板样式文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@import &quot;..&#x2F;my_template&#x2F;my_template.wxss&quot;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="WXS的简单使用"><a href="#WXS的简单使用" class="headerlink" title="WXS的简单使用"></a>WXS的简单使用</h3><p>新建一个<code>.wxs</code>后缀的文件，编写代码，这里以一个截取字符串为案例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var subString &#x3D; function(str, start, end) &#123;</span><br><span class="line">  if (str.length &#x3D;&#x3D; 0 || str &#x3D;&#x3D; undefined) return;</span><br><span class="line">  if (start &gt; end || str.length &lt; end) return str;</span><br><span class="line"></span><br><span class="line">  if (start !&#x3D; undefined &amp;&amp; end !&#x3D; undefined) &#123;</span><br><span class="line">    return str.substring(start, end)</span><br><span class="line">  &#125;</span><br><span class="line">  return str</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 暴露接口</span><br><span class="line">module.exports.subString &#x3D; subString;</span><br></pre></td></tr></table></figure>
+<p>在<code>.wxml</code>文件中使用wxs</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- &#39;tools&#39;是在该页面使用wxs的名字，可以自定义 --&gt;</span><br><span class="line">&lt;wxs src&#x3D;&quot;..&#x2F;utils&#x2F;substring.wxs&quot; module&#x3D;&quot;tools&quot; &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;text&gt;&#123;&#123;tools.subString(&quot;ABCDEFG&quot;)&#125;&#125;&lt;&#x2F;text&gt;</span><br></pre></td></tr></table></figure>
+<p>如果是将<code>wxs</code>的代码直接写在<code>.wxml</code>中，则要在<code>wxs</code>代码中就对其命名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;text&gt;&#123;&#123;tools.subString(&quot;ABCDEFG&quot;)&#125;&#125;&lt;&#x2F;text&gt;</span><br><span class="line"></span><br><span class="line">&lt;wxs module&#x3D;&quot;tools&quot;&gt;</span><br><span class="line">  var subString &#x3D; function(str, start, end) &#123;</span><br><span class="line">    &#x2F;&#x2F; ...</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;&#x2F; 暴露接口</span><br><span class="line">  module.exports.subString &#x3D; subString;</span><br><span class="line">&lt;&#x2F;wxs&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="npm的简单使用"><a href="#npm的简单使用" class="headerlink" title="npm的简单使用"></a>npm的简单使用</h3><p>以安装小程序的 MobX 绑定辅助库为例<br>在命令行中定位到小程序项目根目录按顺序执行以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install --save mobx-miniprogram mobx-miniprogram-bindings</span><br></pre></td></tr></table></figure>
+<p>执行完成后根目录会生成<code>node_modules</code>文件夹，依赖的代码就在里面。<br>然后在微信开发者工具点击 <code>工具</code> - <code>构建npm</code> ，开发者工具会将依赖构建到<code>miniprogram_npm</code>文件夹，这样就可以使用相关的模块了。<br>使用<code>git</code>管理时可以不必上传<code>miniprogram_npm</code>和<code>node_modules</code>文件夹内的文件，只需在下载项目后执行<code>npm install</code>再<code>构建npm</code>即可。</p>
+<h2 id="倒计时js的实现"><a href="#倒计时js的实现" class="headerlink" title="倒计时js的实现"></a>倒计时js的实现</h2><p>传入毫秒开始倒计时，如传入 10*1000 == 10000ms 即为10秒倒计时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; utils.js</span><br><span class="line">const countDown &#x3D; function(time) &#123;</span><br><span class="line">  let day &#x3D; parseInt(time &#x2F; 1000 &#x2F; 60 &#x2F; 60 &#x2F; 60 &#x2F; 24);</span><br><span class="line">  let hour &#x3D; parseInt(time &#x2F; 1000 &#x2F; 60 &#x2F; 60 &#x2F; 60 % 24);</span><br><span class="line">  let minute &#x3D; parseInt(time &#x2F; 1000 &#x2F; 60 % 60);</span><br><span class="line">  let second &#x3D; parseInt(time &#x2F; 1000 % 60);</span><br><span class="line"></span><br><span class="line">  var timeMap &#x3D; &#123;</span><br><span class="line">    day: timeFormat(day),</span><br><span class="line">    hour: timeFormat(hour),</span><br><span class="line">    minute: timeFormat(minute),</span><br><span class="line">    second: timeFormat(second)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return timeMap</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; &#x2F;&#x2F;小于10的格式化函数（2变成02）</span><br><span class="line">function timeFormat(param) &#123;</span><br><span class="line">  return param &lt; 10 ? &#39;0&#39; + param : param;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在页面js中的使用方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">  data: &#123;</span><br><span class="line">    totalTime: 10 * 1000, &#x2F;&#x2F; 10秒倒计时</span><br><span class="line">    timer: &#39;&#39;, &#x2F;&#x2F; 定时器</span><br><span class="line">    hours: &#39;&#39;,</span><br><span class="line">    minute: &#39;&#39;,</span><br><span class="line">    second: &#39;&#39;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">countDown: function() &#123;</span><br><span class="line">    if (this.data.totalTime &gt;&#x3D; 0) &#123;</span><br><span class="line">      let map &#x3D; utils.countDown(this.data.totalTime)</span><br><span class="line">      this.setData(&#123;</span><br><span class="line">        hour: map.hour,</span><br><span class="line">        minute: map.minute,</span><br><span class="line">        second: map.second</span><br><span class="line">      &#125;)</span><br><span class="line">      this.data.totalTime &#x3D; this.data.totalTime - 1000</span><br><span class="line">      this.data.timer &#x3D; setTimeout(this.countDown, 1000);</span><br><span class="line">    &#125; else&#123;</span><br><span class="line">      &#x2F;&#x2F; 时间到的处理</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#x2F;&#x2F; 退出该页面时要取消定时器，否则还会继续倒计时</span><br><span class="line"> onUnload: function() &#123;</span><br><span class="line">    clearTimeout(this.data.timer)</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<h2 id="wx-for的使用"><a href="#wx-for的使用" class="headerlink" title="wx:for的使用"></a>wx:for的使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 循环list数组，wx:for-item是对数组内对象重命名，不加默认为item--&gt;</span><br><span class="line">&lt;!-- 循环list数组，wx:for-index是对数组内下标重命名，不加默认为index--&gt;</span><br><span class="line">&lt;block wx:for&#x3D;&quot;&#123;&#123;list&#125;&#125;&quot; wx:for-item&#x3D;&quot;newName&quot; wx:for-index&#x3D;&quot;newIndex&quot;&gt;</span><br><span class="line">  &lt;text&gt;&#123;&#123;newName.text&#125;&#125;&lt;&#x2F;text&gt;</span><br><span class="line">  &lt;text&gt;&#123;&#123;list[newIndex].text&#125;&#125;&lt;&#x2F;text&gt;</span><br><span class="line">&lt;&#x2F;block&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="一些js的方法记录"><a href="#一些js的方法记录" class="headerlink" title="一些js的方法记录"></a>一些js的方法记录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 获取路径中的文件名</span><br><span class="line">&#x2F;&#x2F; eg. var str &#x3D; &#39;a&#x2F;b&#x2F;c.jpg&#39;</span><br><span class="line">&#x2F;&#x2F; basename(str)  返回 c.jpg</span><br><span class="line">function basename(str) &#123;</span><br><span class="line">  var idx &#x3D; str.lastIndexOf(&#39;&#x2F;&#39;)</span><br><span class="line">  idx &#x3D; idx &gt; -1 ? idx : str.lastIndexOf(&#39;\\&#39;)</span><br><span class="line">  if (idx &lt; 0) &#123;</span><br><span class="line">    return str</span><br><span class="line">  &#125;</span><br><span class="line">  return str.substring(idx + 1);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 返回路径中的文件名，不带后缀</span><br><span class="line">&#x2F;&#x2F; eg. var str &#x3D; &#39;a&#x2F;b&#x2F;c.jpg&#39;</span><br><span class="line">&#x2F;&#x2F; splitFileName(str)  返回c</span><br><span class="line">function splitFileName(text) &#123;</span><br><span class="line">  var pattern &#x3D; &#x2F;\.&#123;1&#125;[a-z]&#123;1,&#125;$&#x2F;;</span><br><span class="line">  if (pattern.exec(text) !&#x3D;&#x3D; null) &#123;</span><br><span class="line">    return (text.slice(0, pattern.exec(text).index));</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    return text;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; string转map</span><br><span class="line">var str &#x3D; &#39;&#123;&quot;name&quot;:&quot;张三&quot;,&quot;age&quot;:&quot;16&quot;&#125;&#39;</span><br><span class="line">var map &#x3D; JSON.parse(str)</span><br><span class="line">&#x2F;&#x2F; 向数组增加元素</span><br><span class="line">var myList &#x3D; [1,3,5]</span><br><span class="line">myList.push(7) &#x2F;&#x2F; [1,3,5,7]  添加到数组末尾</span><br><span class="line">myList.unshift(4) &#x2F;&#x2F; [4,1,3,5,7]  添加到第0个位置</span><br><span class="line">myList.splice(2,1) &#x2F;&#x2F; [4,1,5,7]  删除数组下标第2个元素</span><br><span class="line">&#x2F;&#x2F; myList.splice(a,b)  从数组下标为a的元素开始(包括a)删除b个元素</span><br></pre></td></tr></table></figure>
+<h2 id="wxss记录"><a href="#wxss记录" class="headerlink" title="wxss记录"></a>wxss记录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flex-grow: 0; &#x2F;* 放大比例，0是不放大*&#x2F;</span><br><span class="line">flex-shrink: 0; &#x2F;* 缩小比例,0是不缩小 *&#x2F;</span><br><span class="line">box-shadow: 0rpx 0rpx 5rpx 5rpx #d3d3d3; &#x2F;* 水平位移、垂直位移、模糊程度、阴影半径、颜色*&#x2F;</span><br></pre></td></tr></table></figure>
+<p>显示2行文字，多余的省略号显示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">width: 500rpx;&#x2F;*可选*&#x2F;</span><br><span class="line">text-overflow: ellipsis;</span><br><span class="line">overflow: hidden;</span><br><span class="line">display: -webkit-box;</span><br><span class="line">-webkit-line-clamp: 2; &#x2F;* 2行 *&#x2F;</span><br><span class="line">-webkit-box-orient: vertical;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/11/flutter%20mobx%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -569,7 +663,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -581,7 +675,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
